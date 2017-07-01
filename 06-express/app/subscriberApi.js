@@ -25,4 +25,25 @@ router.get('/', (req, res) => {
     res.json(db)
 })
 
+router.get('/:id', (req, res) => {
+    let subscriber = db.find(sub => sub.id == req.params.id)
+    if (subscriber) {
+        res.json(subscriber)
+    } else {
+        res.sendStatus(404)
+    }
+})
+
+router.post('/', (req, res) => {
+    let newSubscriber = {
+        id: db.length + 1,
+        name: req.body.name,
+        email: req.body.email
+    }
+
+    db.push(newSubscriber);
+
+    res.status(201).json(newSubscriber);
+})
+
 module.exports = router;
